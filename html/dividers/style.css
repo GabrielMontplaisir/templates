@@ -1,0 +1,115 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --body-bg: hsl(0, 0%, 25%);
+}
+
+html {
+  color-scheme: dark light;
+}
+
+body {
+  background: var(--body-bg);
+  color: white;
+  font-family: system-ui;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.wrapper {
+  max-width: 50rem;
+  /* To center content left and right */
+  margin-inline: auto;
+  /* To pad left and right */
+  padding-inline: 1rem;
+}
+
+h1 {
+  font-size: 3rem;
+  text-align: center;
+}
+
+h2 {
+  font-size: 2.25rem;
+}
+
+section {
+  /* To pad the top and bottom */
+  padding-block: 5rem;
+}
+
+.diagonal {
+  --skew-angle: -5deg;
+  --background: linear-gradient(45deg, #12c2e9, #c471ed, #f64f59);
+
+  /* The position relative is keeping the ::after inside the .diagonal container */
+  position: relative;
+  /* The isolation is keeping the z-index from the ::after inside the .diagonal container */
+  isolation: isolate;
+}
+
+.diagonal::after {
+  /* Necessary because we're declaring a pseudo-element like ::before or ::after */
+  content: "";
+  background: var(--background);
+  position: absolute;
+  z-index: -1;
+  /* Inset is another way of declaring top, bottom, left & right */
+  inset: 0;
+  transform: skewY(var(--skew-angle));
+}
+
+.spikes {
+  --spike-color: var(--body-bg);
+  --spike-width: 30px;
+  --spike-height: 50px;
+
+  position: relative;
+  color: black;
+  background: linear-gradient(to right, #fdc830, #f37335);
+}
+
+.spikes::before,
+.spikes::after {
+  content: "";
+  position: absolute;
+  /* When you declare position: absolute, you need to declare the width of the element */
+  width: 100%;
+  height: var(--spike-height);
+  background: var(--spike-color);
+  -webkit-mask-image: url("assets/triangle.svg");
+  -webkit-mask-size: var(--spike-width) var(--spike-height);
+  /* We want the webkit first in case the Chrome version hasn't been updated yet. The non-webkit versions are for FF & Safari. */
+  mask-image: url("assets/triangle.svg");
+  mask-size: var(--spike-width) var(--spike-height);
+}
+
+.spikes::before {
+  top: 0;
+}
+
+.spikes::after {
+  bottom: 0;
+  transform: rotate(0.5turn);
+}
+
+.waves {
+  /* Mask created w/ https://css-generators.com/wavy-shapes/ */
+  background: linear-gradient(to right, #00f260, #0575e6);
+
+  --mask: radial-gradient(41px at 50% 57.5px, #000 99%, #0000 101%)
+      calc(50% - 50px) 0/100px 51% repeat-x,
+    radial-gradient(41px at 50% -32.5px, #0000 99%, #000 101%) 50% 25px/100px
+      calc(51% - 25px) repeat-x,
+    radial-gradient(41px at 50% calc(100% - 57.5px), #000 99%, #0000 101%)
+      calc(50% - 50px) 100%/100px 51% repeat-x,
+    radial-gradient(41px at 50% calc(100% + 32.5px), #0000 99%, #000 101%) 50%
+      calc(100% - 25px) / 100px calc(51% - 25px) repeat-x;
+  -webkit-mask: var(--mask);
+  mask: var(--mask);
+}
