@@ -9,7 +9,7 @@ function convertCtoF(celsius) {
 // Reverse a String
 // Takes a string (like "hello") and reverses it (e.g. "olleh")
 
-function reverseString(str) {
+function reverseStr(str) {
   return str.split("").reverse().join("");
 }
 
@@ -33,8 +33,7 @@ function findLongestWordLength(str) {
 // Takes an array, and outputs the largest value of in the array (and sub-arrays)
 
 function largestOfFour(arr) {
-  const newArr = arr.map((word) => Math.max(...word));
-  return newArr;
+  return arr.map((val) => Math.max(...val));
 }
 
 // Confirm the ending
@@ -50,15 +49,15 @@ function confirmEnding(str, target) {
 // Repeat a string "num" amount of times. Return empty is num is a negative number. Recursive function
 // You can also use the .repeat() method.
 
-function repeatStringNumTimes(str, num) {
-  return num > 0 ? str + repeatStringNumTimes(str, num - 1) : "";
+function repeatString(str, num) {
+  return num > 0 ? str + repeatString(str, num - 1) : "";
 }
 
 // Truncate a string
 // Takes a string, and "cuts" it when it's longer than "num". Replaces w/ ...
 // If length of string is longer than num, just output the string.
 
-function truncateString(str, num) {
+function truncateStr(str, num) {
   return str.length > num ? str.slice(0, num) + "..." : str;
 }
 
@@ -72,7 +71,7 @@ function findElement(arr, func) {
 // Check if value is boolean primitive
 // In other words, check if a value is either TRUE or FALSE
 
-function booWho(bool) {
+function isBool(bool) {
   return typeof bool === "boolean";
 }
 
@@ -89,13 +88,17 @@ function titleCase(str) {
   return str.toLowerCase().replace(/(^|\s)\S/g, (L) => L.toUpperCase());
 }
 
+// Capitalize sentence
+// Takes a string, and capitalizes the first letter in the sentence.
+
+const capitalize = (str) => `${str.charAt(0).toUpperCase()}${str.slice(1)}`;
+
 // Copy the first item (array) into the second item (another array), at the selected index. Returns new array without modifying original two.
 // Fairly certain this can normally be solved w/ arr2.toSpliced(n,0,...arr1), but didn't work on FCC.
 
-function frankenSplice(arr1, arr2, n) {
+function spliceArr(arr1, arr2, n) {
   const newArr = [...arr2];
-  newArr.splice(n, 0, ...arr1);
-  return newArr;
+  return newArr.splice(n, 0, ...arr1);
 }
 
 // Remove falsy values from array. Returns new array.
@@ -126,7 +129,7 @@ function mutation(arr) {
 // Split array into groups of "size".
 // Start a new array. As we splice (cut) the array from index 0 to index "size", we push it to the new Array.
 
-function chunkArrayInGroups(arr, size) {
+function chunkArray(arr, size) {
   const newArr = [];
   while (arr.length > 0) {
     newArr.push(arr.splice(0, size));
@@ -135,7 +138,7 @@ function chunkArrayInGroups(arr, size) {
 }
 
 // Copy array 'num' times in a new array
-function copyMachine(arr, num) {
+function copyArray(arr, num) {
   let newArr = [];
   while (num >= 1) {
     newArr.push([...arr]);
@@ -204,12 +207,12 @@ const squareList = (arr) => {
 };
 
 // Sort an array in ascending numerical order
-function ascendingOrder(arr) {
+function sortAscending(arr) {
   return arr.sort((a, b) => a - b);
 }
 
 // Sort an array in reverse alphabetical order
-function reverseAlpha(arr) {
+function sortReverseAlpha(arr) {
   return arr.sort((a, b) => (a === b ? 0 : a < b ? 1 : -1));
 }
 
@@ -217,17 +220,16 @@ function reverseAlpha(arr) {
 // Currying is the concept of taking one function with multiple arguments, and splitting it into multiple functions which takes each argument separately.
 // i.e. func(x,y,z) => func(x)(y)(z)
 
-function add(x) {
+function curryAdd(x) {
   return function (y) {
     return function (z) {
       return x + y + z;
     };
   };
 }
-add(10)(20)(30);
 
 // Sum all numbers in a range
-const sumAll = (arr) => {
+const sumRange = (arr) => {
   const startNum = Math.min(...arr);
   const endNum = Math.max(...arr);
   const numCount = Math.abs(startNum - endNum) + 1;
@@ -459,3 +461,47 @@ function orbitalPeriod(arr) {
   });
   return orbital;
 }
+
+// Calculate percentages
+
+const calculatePercent = (value, total) => Math.round((value / total) * 100);
+
+// Get Random Element
+
+const getRandomItem = (items) =>
+  items[Math.floor(Math.random() * items.length)];
+
+// Remove duplicates
+
+const removeDuplicates = (arr) => [...new Set(arr)];
+
+// Sort elements by a certain property
+
+const sortBy = (arr, key) =>
+  arr.sort((a, b) => (a[key] > b[key] ? 1 : a[key] < b[key] ? -1 : 0));
+
+// Check if Arrays/Objects are equal
+
+const isEqual = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+
+// Count # of occurences in an array
+
+const countOccurrences = (arr, value) =>
+  arr.reduce((a, v) => (v === value ? a + 1 : a), 0);
+
+// Wait a certain amount of time
+
+const wait = async (milliseconds) =>
+  new Promise((resolve) => setTimeout(resolve, milliseconds));
+
+// Pluck property from an array of objects
+
+const pluck = (objs, key) => objs.map((obj) => obj[key]);
+
+// Insert element at a certain position in an array
+
+const insert = (arr, index, newItem) => [
+  ...arr.slice(0, index),
+  newItem,
+  ...arr.slice(index),
+];
